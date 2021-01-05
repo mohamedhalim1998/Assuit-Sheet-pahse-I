@@ -1,0 +1,1 @@
+## Java based solutions for Assuit Juniors Phase 1 Training 
