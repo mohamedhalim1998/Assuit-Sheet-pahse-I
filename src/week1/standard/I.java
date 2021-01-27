@@ -1,4 +1,4 @@
-package week1;
+package week1.standard;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,9 +17,9 @@ public class I {
         pop_back : remove the last number in the array
         front : print the first element in the array
         back : print the last element in the array
-        sort l r : where (1≤l,r≤|week1.week2.A|) sort all elements of week1.week2.A fron l to r.
-        reverse l r : where (1≤l,r≤|week1.week2.A|) reverse all elements of week1.week2.A fron l to r.
-        print pos : where (1≤pos≤|week1.week2.A|) print the element in the index pos
+        sort l r : where (1≤l,r≤|week1.week2.week3.week1.practice.A|) sort all elements of week1.week2.week3.week1.practice.A fron l to r.
+        reverse l r : where (1≤l,r≤|week1.week2.week3.week1.practice.A|) reverse all elements of week1.week2.week3.week1.practice.A fron l to r.
+        print pos : where (1≤pos≤|week1.week2.week3.week1.practice.A|) print the element in the index pos
         push_back x : where (1≤x≤109) add x in the end of the array.
          */
         for (int i = 0; i < n; i++) {

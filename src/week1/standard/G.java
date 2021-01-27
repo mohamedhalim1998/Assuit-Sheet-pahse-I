@@ -1,42 +1,54 @@
-package week1;
+package week1.standard;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class M {
+public class G {
     public static void main(String[] args) {
-        FastScanner scanner = new FastScanner();
+        FastReader scanner = new FastReader();
         int n = scanner.nextInt();
+        int m = scanner.nextInt();
         int q = scanner.nextInt();
-        HashSet<Integer> set = new HashSet<>();
+        long[][] matrix = new long[n][m];
         for (int i = 0; i < n; i++) {
-            set.add(scanner.nextInt());
-        }
-        int[] sums = new int[100000 + 9];
-        for (int i = 1; i < sums.length; i++) {
-            if (set.contains(i)) {
-                sums[i] = sums[i - 1] + 1;
-            } else {
-                sums[i] = sums[i - 1];
+            for (int j = 0; j < m; j++) {
+                matrix[i][j] = scanner.nextInt();
             }
         }
-        StringBuilder out = new StringBuilder();
-        for (int i = 0; i < q; i++) {
-            int x = scanner.nextInt();
-            out.append(sums[x - 1]).append(" ").append(sums[sums.length - 1] - sums[x]).append("\n");
+        long[][] sums = new long[n + 1][m + 1];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                sums[i + 1][j + 1] = sums[i + 1][j] + matrix[i][j];
+            }
         }
-        System.out.println(out);
+        for (int j = 0; j < m; j++) {
+            for (int i = 0; i < n; i++) {
+                sums[i + 1][j + 1] = sums[i + 1][j + 1] + sums[i][j + 1];
+            }
+        }
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < q; i++) {
+            int x1 = scanner.nextInt();
+            int y1 = scanner.nextInt();
+
+            int x2 = scanner.nextInt();
+            int y2 = scanner.nextInt();
+
+            long sum = sums[x2][y2] - sums[x2][y1 - 1] - sums[x1 - 1][y2] + sums[x1 - 1][y1 - 1];
+
+            builder.append(sum).append('\n');
+        }
+        System.out.println(builder);
     }
 
-    static class FastScanner {
+    static class FastReader {
         BufferedReader br;
         StringTokenizer st;
 
-        public FastScanner() {
+        public FastReader() {
             br = new BufferedReader(new
                     InputStreamReader(System.in));
         }
@@ -72,14 +84,6 @@ public class M {
                 e.printStackTrace();
             }
             return str;
-        }
-
-        int[] nextArray(int n) {
-            int[] arr = new int[n];
-            for (int i = 0; i < n; i++) {
-                arr[i] = nextInt();
-            }
-            return arr;
         }
     }
 }

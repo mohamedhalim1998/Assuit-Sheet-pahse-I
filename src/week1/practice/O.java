@@ -1,32 +1,52 @@
-package week1;
+package week1.practice;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class C {
+public class O {
     public static void main(String[] args) {
-        FastReader scanner = new FastReader();
+        FastScanner scanner = new FastScanner();
+        int[] freq = new int[100009];
         int n = scanner.nextInt();
-        int[] arr = new int[100000 + 9];
         for (int i = 0; i < n; i++) {
-            arr[scanner.nextInt()]++;
+            freq[scanner.nextInt()]++;
         }
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[i]; j++) {
-                builder.append(i).append(" ");
+        StringBuilder out = new StringBuilder();
+        int max = 100009;
+        int min = 0;
+        int end = max;
+        int start = -1;
+        while (n > 0) {
+            for (int i = min; i < max; i++) {
+                if (freq[i] > 0) {
+                    freq[i]--;
+                    out.append(i).append(' ');
+                    n--;
+                    if (freq[i] > 0) {
+                        end = i + 1;
+                        if (start == -1) {
+                            start = i;
+                        }
+                    }
+                }
             }
+            out.append('\n');
+            min = Math.max(start, 0);
+            start = -1;
+            max = end;
+            end = 100009;
+
         }
-        System.out.println(builder);
+        System.out.println(out);
     }
 
-    static class FastReader {
+    static class FastScanner {
         BufferedReader br;
         StringTokenizer st;
 
-        public FastReader() {
+        public FastScanner() {
             br = new BufferedReader(new
                     InputStreamReader(System.in));
         }
@@ -63,6 +83,13 @@ public class C {
             }
             return str;
         }
-    }
 
+        int[] nextArray(int n) {
+            int[] arr = new int[n];
+            for (int i = 0; i < n; i++) {
+                arr[i] = nextInt();
+            }
+            return arr;
+        }
+    }
 }

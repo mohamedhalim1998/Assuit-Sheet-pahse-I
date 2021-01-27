@@ -1,39 +1,42 @@
-package week1;
+package week1.standard;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.StringTokenizer;
 
-public class H {
+public class M {
     public static void main(String[] args) {
-        FastReader scanner = new FastReader();
-        String s = scanner.next();
-        int[] sums = new int[s.length() + 1];
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == 'a') {
-                sums[i + 1] = sums[i] + 1;
+        FastScanner scanner = new FastScanner();
+        int n = scanner.nextInt();
+        int q = scanner.nextInt();
+        HashSet<Integer> set = new HashSet<>();
+        for (int i = 0; i < n; i++) {
+            set.add(scanner.nextInt());
+        }
+        int[] sums = new int[100000 + 9];
+        for (int i = 1; i < sums.length; i++) {
+            if (set.contains(i)) {
+                sums[i] = sums[i - 1] + 1;
             } else {
-                sums[i + 1] = sums[i];
+                sums[i] = sums[i - 1];
             }
         }
-        int n = scanner.nextInt();
         StringBuilder out = new StringBuilder();
-        for (int i = 0; i < n; i++) {
-            int l = scanner.nextInt();
-            int r = scanner.nextInt();
-            out.append(sums[r] - sums[l - 1]).append('\n');
+        for (int i = 0; i < q; i++) {
+            int x = scanner.nextInt();
+            out.append(sums[x - 1]).append(" ").append(sums[sums.length - 1] - sums[x]).append("\n");
         }
         System.out.println(out);
-
     }
 
-    static class FastReader {
+    static class FastScanner {
         BufferedReader br;
         StringTokenizer st;
 
-        public FastReader() {
+        public FastScanner() {
             br = new BufferedReader(new
                     InputStreamReader(System.in));
         }

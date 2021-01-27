@@ -1,32 +1,37 @@
-package week1;
+package week1.practice;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.StringTokenizer;
 
-public class L {
+public class P {
     public static void main(String[] args) {
         FastScanner scanner = new FastScanner();
         int n = scanner.nextInt();
         int k = scanner.nextInt();
-        HashSet<Integer> set = new HashSet<>();
-        StringBuilder out = new StringBuilder();
+        int[] arr = new int[n];
+        int[] freq = new int[2000009];
         for (int i = 0; i < n; i++) {
             int x = scanner.nextInt();
-            if (k > 0 && !set.contains(x)) {
-                out.append(i + 1).append(" ");
-                set.add(x);
-                k--;
+            freq[x + 1000000]++;
+            arr[i] = x;
+        }
+        long count = 0;
+        for (int i : arr) {
+            try {
+                count += freq[k +1000000 - i];
+                if (k - i ==  i) {
+                    count--;
+                }
+            } catch (ArrayIndexOutOfBoundsException e){
+                count += 0;
             }
+
         }
-        if (k == 0) {
-            System.out.println("YES");
-            System.out.println(out);
-        } else {
-            System.out.println("NO");
-        }
+        System.out.println(count / 2);
     }
 
     static class FastScanner {

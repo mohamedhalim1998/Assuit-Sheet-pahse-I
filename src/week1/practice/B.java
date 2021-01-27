@@ -1,64 +1,35 @@
-package week1;
+package week1.practice;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.StringTokenizer;
 
-public class J {
+public class B {
     public static void main(String[] args) {
         FastScanner scanner = new FastScanner();
         int n = scanner.nextInt();
-        Grade[] grades = new Grade[n];
+        int[][] matrix = new int[n][n];
         for (int i = 0; i < n; i++) {
-            grades[i] = new Grade(scanner.next(), new int[]{
-                    scanner.nextInt(),
-                    scanner.nextInt(),
-                    scanner.nextInt(),
-                    scanner.nextInt()
-
-            });
+            matrix[i] = scanner.nextArray(n);
         }
-        Arrays.sort(grades);
-        for(Grade g : grades){
-            System.out.println(g);
-        }
-    }
+        for (int i = 0; i < n; i++) {
+            HashSet<Integer> set = new HashSet<>();
+            for (int j = 0; j < n; j++) {
+                set.add(matrix[i][j]);
+            }
+            if (set.size() == n) {
+                for (int j = 0; j < n; j++) {
+                    if (matrix[i][j] != 0)
+                        System.out.print(matrix[i][j] + " ");
+                    else
+                        System.out.print(n+ " ");
+                }
+                return;
 
-    static class Grade implements Comparable<Grade> {
-        String name;
-        int[] grades = new int[4];
-        int total;
-
-        public Grade(String name, int[] grades) {
-            this.name = name;
-            this.grades = grades;
-            this.total = 0;
-            for (int i : grades) {
-                total += i;
             }
         }
-
-        @Override
-        public int compareTo(Grade grade) {
-            if (total != grade.total) {
-                return Integer.compare(grade.total, total);
-            } else {
-                return name.compareTo(grade.name);
-            }
-        }
-
-        @Override
-        public String toString() {
-            StringBuilder s = new StringBuilder();
-            s.append(name).append(' ').append(total).append(' ');
-            for (int value : grades) {
-                s.append(value).append(" ");
-            }
-            return s.toString();
-        }
-
     }
 
     static class FastScanner {

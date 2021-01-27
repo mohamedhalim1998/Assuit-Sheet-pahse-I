@@ -1,56 +1,39 @@
-package week1;
+package week1.standard;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class K {
+public class H {
     public static void main(String[] args) {
-        FastScanner scanner = new FastScanner();
-        int n = scanner.nextInt();
-        Friend[] friends = new Friend[n];
-        for (int i = 0; i < n; i++) {
-            friends[i] = new Friend(scanner.next(), scanner.nextInt());
-        }
-        Arrays.sort(friends);
-        for(Friend f : friends){
-            System.out.println(f);
-        }
-    }
-
-    static class Friend implements Comparable<Friend> {
-
-        String name;
-        int salary;
-
-        public Friend(String name, int salary) {
-            this.name = name;
-            this.salary = salary;
-        }
-
-        @Override
-        public int compareTo(Friend friend) {
-            if (salary != friend.salary) {
-                return Integer.compare(friend.salary, salary);
-
+        FastReader scanner = new FastReader();
+        String s = scanner.next();
+        int[] sums = new int[s.length() + 1];
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == 'a') {
+                sums[i + 1] = sums[i] + 1;
             } else {
-                return name.compareTo(friend.name);
+                sums[i + 1] = sums[i];
             }
         }
-
-        @Override
-        public String toString() {
-            return name + " " + salary;
+        int n = scanner.nextInt();
+        StringBuilder out = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            int l = scanner.nextInt();
+            int r = scanner.nextInt();
+            out.append(sums[r] - sums[l - 1]).append('\n');
         }
+        System.out.println(out);
+
     }
 
-    static class FastScanner {
+    static class FastReader {
         BufferedReader br;
         StringTokenizer st;
 
-        public FastScanner() {
+        public FastReader() {
             br = new BufferedReader(new
                     InputStreamReader(System.in));
         }

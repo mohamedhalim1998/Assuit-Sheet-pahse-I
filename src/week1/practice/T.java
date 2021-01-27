@@ -1,54 +1,49 @@
-package week1;
+package week1.practice;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class G {
+public class T {
     public static void main(String[] args) {
-        FastReader scanner = new FastReader();
+        FastScanner scanner = new FastScanner();
         int n = scanner.nextInt();
+        int[] arr = scanner.nextArray(n);
         int m = scanner.nextInt();
-        int q = scanner.nextInt();
-        long[][] matrix = new long[n][m];
+        int[] sums = new int[n + 1];
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                matrix[i][j] = scanner.nextInt();
+            sums[i + 1] = sums[i] + arr[i];
+        }
+        StringBuilder out = new StringBuilder();
+        for (int i = 0; i < m; i++) {
+            int x = scanner.nextInt();
+            out.append(lessSearch(sums, x) + 1).append('\n');
+        }
+        System.out.println(out);
+    }
+    static int lessSearch(int[] arr, int x) {
+        int start = 0, end = arr.length - 1;
+
+        int ans = -1;
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+
+            if (arr[mid] >= x) {
+                end = mid - 1;
+            } else {
+                ans = mid;
+                start = mid + 1;
             }
         }
-        long[][] sums = new long[n + 1][m + 1];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                sums[i + 1][j + 1] = sums[i + 1][j] + matrix[i][j];
-            }
-        }
-        for (int j = 0; j < m; j++) {
-            for (int i = 0; i < n; i++) {
-                sums[i + 1][j + 1] = sums[i + 1][j + 1] + sums[i][j + 1];
-            }
-        }
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < q; i++) {
-            int x1 = scanner.nextInt();
-            int y1 = scanner.nextInt();
-
-            int x2 = scanner.nextInt();
-            int y2 = scanner.nextInt();
-
-            long sum = sums[x2][y2] - sums[x2][y1 - 1] - sums[x1 - 1][y2] + sums[x1 - 1][y1 - 1];
-
-            builder.append(sum).append('\n');
-        }
-        System.out.println(builder);
+        return ans;
     }
 
-    static class FastReader {
+    static class FastScanner {
         BufferedReader br;
         StringTokenizer st;
 
-        public FastReader() {
+        public FastScanner() {
             br = new BufferedReader(new
                     InputStreamReader(System.in));
         }
@@ -84,6 +79,14 @@ public class G {
                 e.printStackTrace();
             }
             return str;
+        }
+
+        int[] nextArray(int n) {
+            int[] arr = new int[n];
+            for (int i = 0; i < n; i++) {
+                arr[i] = nextInt();
+            }
+            return arr;
         }
     }
 }
